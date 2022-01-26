@@ -24,14 +24,25 @@ const database = {
         { id: 3, package: 'Visibility Package (includes side and reat cameras)', price: 2500 },
         { id: 4, package: 'Ultra Package (includes navigation and visibility packages)', price: 4500 },
 
-    ]
+    ],
+    customOrders: [
+        {
+            id: 1,
+            paintColorId: 3,
+            interiorId: 2,
+            wheelId: 3,
+            technologyId: 1,
+            timestamp: 1614659931693
+        }
+    ],
+    orderBuilder: {}
 }
 
-export const getPaintColor = () => {
+export const getPaintColors = () => {
     return database.paintColors.map((paintColor) => ({ ...paintColor }))
 }
 
-export const getInterior = () => {
+export const getInteriors = () => {
     return database.interiors.map((interior) => ({ ...interior }))
 }
 
@@ -41,4 +52,45 @@ export const getWheels = () => {
 
 export const getTechnologies = () => {
     return database.technologies.map((technology) => ({ ...technology }))
+}
+
+export const getOrders = () => {
+    return database.customOrders.map(customOrders => ({...customOrders}))
+}
+
+export const setPaintColor = (id) => {
+    database.orderBuilder.paintColorId = id
+}
+
+export const setInterior = (id) => {
+    database.orderBuilder.interiorId = id
+}
+
+export const setWheel = (id) => {
+    database.orderBuilder.wheelId = id
+}
+
+export const setTechnology = (id) => {
+    database.orderBuilder.technologyId = id
+}
+
+export const addCustomOrder = () => {
+    // Copy the current state of user choices
+    const newOrder = {...database.orderBuilder}
+
+    // Add a new primary key to the object
+    const lastIndex = database.customOrders.length - 1
+    newOrder.id = database.customOrders[lastIndex].id + 1
+
+    // Add a timestamp to the order
+    newOrder.timestamp = Date.now()
+
+    // Add the new order object to custom orders state
+    database.customOrders.push(newOrder)
+
+    // Reset the temporary state for user choices
+    database.orderBuilder = {}
+
+    // Broadcast a notification that permanent state has changed
+    document.dispatchEvent(new CustomEvent("stateChanged"))
 }
