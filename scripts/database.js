@@ -25,16 +25,12 @@ const database = {
         { id: 4, package: 'Ultra Package (includes navigation and visibility packages)', price: 4500 },
 
     ],
-    customOrders: [
-        {
-            id: 1,
-            paintColorId: 3,
-            interiorId: 2,
-            wheelId: 3,
-            technologyId: 1,
-            timestamp: 1614659931693
-        }
+    vehicleModels: [
+        { id: 1, model:"Car" , priceMultiplier: 1 },
+        { id: 2, model: "SUV", priceMultiplier: 1.5 },
+        { id: 3, model: "Truck", priceMultiplier: 2.25 }
     ],
+    customOrders: [],
     orderBuilder: {}
 }
 
@@ -58,6 +54,10 @@ export const getOrders = () => {
     return database.customOrders.map(customOrders => ({...customOrders}))
 }
 
+export const getVehicleModels = () => {
+    return database.vehicleModels.map(vehicleModel => ({...vehicleModel}))
+}
+
 export const setPaintColor = (id) => {
     database.orderBuilder.paintColorId = id
 }
@@ -74,13 +74,17 @@ export const setTechnology = (id) => {
     database.orderBuilder.technologyId = id
 }
 
+export const setModel = (id) => {
+    database.orderBuilder.modelId = id
+}
+
 export const addCustomOrder = () => {
     // Copy the current state of user choices
     const newOrder = {...database.orderBuilder}
 
     // Add a new primary key to the object
-    const lastIndex = database.customOrders.length - 1
-    newOrder.id = database.customOrders[lastIndex].id + 1
+    const lastIndex = database.customOrders.length
+    newOrder.id = lastIndex + 1
 
     // Add a timestamp to the order
     newOrder.timestamp = Date.now()

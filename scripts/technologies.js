@@ -5,16 +5,15 @@ const technologies = getTechnologies()
 document.addEventListener(
     "change",
     (changeEvent) => {
-        if (changeEvent.target.id === "resource") {
+        if (changeEvent.target.id === "technology") {
             setTechnology(parseInt(changeEvent.target.value))
-            console.log(chosenOption)  // "1" or "2"
         }
     }
 )
 
 
 export const Technologies = () => {
-    let html = "<select id='resource'><option value='0'>Select your paint color...</option>"
+    let html = "<select id='technology'><option value='0'>Select your paint color...</option>"
 
     
     for (const technology of technologies) {
