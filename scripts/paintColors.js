@@ -5,16 +5,15 @@ const paintColors = getPaintColors()
 document.addEventListener(
     "change",
     (changeEvent) => {
-        if (changeEvent.target.id === "resource") {
+        if (changeEvent.target.id === "paintColor") {
             setPaintColor(parseInt(changeEvent.target.value))
-            console.log(chosenOption)  // "1" or "2"
         }
     }
 )
 
 
 export const PaintColors = () => {
-    let html = "<select id='resource'><option value='0'>Select your paint color...</option>"
+    let html = "<select id='paintColor'><option value='0'>Select your paint color...</option>"
 
     
     for (const paintColor of paintColors) {
